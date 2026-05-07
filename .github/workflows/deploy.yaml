@@ -23,15 +23,15 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build backend
-        run: docker build -t ghcr.io/$rasputin2/backend:latest ./src/backend
+        run: docker build -t ghcr.io/rasputin2/backend:latest ./src/backend
 
       - name: Build frontend
-        run: docker build -t ghcr.io/$rasputin2/frontend:latest ./src/frontend
+        run: docker build -t ghcr.io/rasputin2/frontend:latest ./src/frontend
 
       - name: Push images
         run: |
-          docker push ghcr.io/$rasputin2/backend:latest
-          docker push ghcr.io/$rasputin2/frontend:latest
+          docker push ghcr.io/rasputin2/backend:latest
+          docker push ghcr.io/rasputin2/frontend:latest
 
       - name: Set kubeconfig
         run: |

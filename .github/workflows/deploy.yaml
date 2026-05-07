@@ -23,10 +23,10 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build backend
-        run: docker build -t ghcr.io/${{ github.repository_owner }}/backend:latest ./src/backend
+        run: docker build -t ghcr.io/$rasputin2/backend:latest ./src/backend
 
       - name: Build frontend
-        run: docker build -t ghcr.io/${{ github.repository_owner }}/frontend:latest ./src/frontend
+        run: docker build -t ghcr.io/$rasputin2/frontend:latest ./src/frontend
 
       - name: Push images
         run: |

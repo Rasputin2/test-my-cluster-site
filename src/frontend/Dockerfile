@@ -2,8 +2,9 @@ FROM python:3.11-bookworm
 
 WORKDIR /app
 
-COPY pyproject.toml .
-RUN pip install uv && uv pip install .
+COPY . .
+
+RUN pip install uv && uv pip install --system .
 
 COPY app ./app
 

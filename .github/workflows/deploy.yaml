@@ -30,8 +30,8 @@ jobs:
 
       - name: Push images
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/backend:latest
-          docker push ghcr.io/${{ github.repository_owner }}/frontend:latest
+          docker push ghcr.io/$rasputin2/backend:latest
+          docker push ghcr.io/$rasputin2/frontend:latest
 
       - name: Set kubeconfig
         run: |

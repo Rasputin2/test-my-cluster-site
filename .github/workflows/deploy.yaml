@@ -51,11 +51,3 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/rasputin2/frontend:latest
-
-      # - name: Set kubeconfig
-      #   run: |
-      #     mkdir -p ~/.kube
-      #     echo "${{ secrets.KUBECONFIG }}" | base64 -d > ~/.kube/config
-
-      # - name: Deploy
-      #   run: kubectl apply -f k8s/

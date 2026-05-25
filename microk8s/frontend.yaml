@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  namespace: test-my-cluster-site
 spec:
   replicas: 1
   selector:
@@ -16,14 +17,19 @@ spec:
         - name: ghcr-secret   
       containers:
         - name: frontend
-          image: ghcr.io/rasputin2/frontend:latest
+          image: ghcr.io/rasputin2/frontend:INITIAL_SHA
+          imagePullPolicy: Always
           ports:
             - containerPort: 8501
+          env:
+            - name: BACKEND_URL
+              value: "http://backend-service:8000"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: frontend-service
+  namespace: test-my-cluster-site
 spec:
   selector:
     app: frontend

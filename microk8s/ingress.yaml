@@ -2,7 +2,9 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: app-ingress
+  namespace: test-my-cluster-site
 spec:
+  ingressClassName: nginx
   rules:
     - http:
         paths:

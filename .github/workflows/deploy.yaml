@@ -19,24 +19,35 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Add ARM emulation support
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      # Add the multi-architecture builder
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Login to GHCR
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build backend
-        run: docker build -t ghcr.io/rasputin2/backend:latest ./src/backend
+      # Combines build and push for backend into one step targeting ARM64
+      - name: Build and Push Backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./src/backend
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ghcr.io/rasputin2/backend:${{ github.sha }}
 
-      - name: Build frontend
-        run: docker build -t ghcr.io/rasputin2/frontend:latest ./src/frontend
-
-      - name: Push images
-        run: |
-          docker push ghcr.io/rasputin2/backend:latest
-          docker push ghcr.io/rasputin2/frontend:latest
-
-      # - name: Set kubeconfig
-      #   run: |
-      #     mkdir -p ~/.kube
-      #     echo "${{ secrets.KUBECONFIG }}" | base64 -d > ~/.kube/config
-
-      # - name: Deploy
-      #   run: kubectl apply -f k8s/
+      # Combines build and push for frontend into one step targeting A${{ github.sha }}RM64
+      - name: Build and Push Frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./src/frontend
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ghcr.io/rasputin2/frontend:${{ github.sha }}

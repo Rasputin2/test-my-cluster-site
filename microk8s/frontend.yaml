@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/rasputin2/frontend:INITIAL_SHA
+          image: ghcr.io/rasputin2/frontend:cba0c68c3698e2e21045e08457b37515dee453e3
           imagePullPolicy: Always
           ports:
             - containerPort: 8501

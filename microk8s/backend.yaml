@@ -13,17 +13,19 @@ spec:
       labels:
         app: backend
     spec:
-      imagePullSecrets:       
-        - name: ghcr-secret   
       containers:
         - name: backend
           image: ghcr.io/rasputin2/backend:INITIAL_SHA
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
-          env:
-            - name: BACKEND_URL
-              value: "http://backend-service:8000"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
